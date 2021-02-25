@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\TasksController;
+use App\Models\Jobs;
+use App\Models\People;
+use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,3 +42,4 @@ Route::patch('/editt/{id}', 'App\Http\Controllers\TasksController@update');
 Route::get('/editt/{id}', 'App\Http\Controllers\TasksController@edit');
 
 Route::delete('/del/{id}', 'App\Http\Controllers\TasksController@deleteTask');
+

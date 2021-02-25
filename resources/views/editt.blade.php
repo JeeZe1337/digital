@@ -14,9 +14,9 @@
     <div class="input-group-prepend">
         <span class="input-group-text">Исполнитель</span>
     </div>   
-    <select for="executor" name="executor" value="{{ $tasks->executor }}" class="form-control">
+    <select for="executor" name="executor" class="form-control">
         @foreach ($people as $peoples)
-        <option>{{ $peoples->name }}</option>
+        <option value = "{{ $peoples->id }}" {{ ( $peoples->id == $tasks->executor) ? 'selected' : '' }}>{{ $peoples->name }}</option>
         @endforeach
 </select>
 </div>
@@ -24,10 +24,11 @@
     <div class="input-group-prepend">
         <span class="input-group-text">Статус</span>
     </div>   
-<select for="status" name="status" value="{{ $tasks->status }}" class="form-control">
-    <option>Открыта</option>  
-    <option>В работе</option>
-    <option>Завершена</option>    
+<select for="status" name="status" class="form-control">
+  @foreach ($jobs as $job)
+  <option value = "{{ $job->id }}" {{ ( $job->id == $tasks->status) ? 'selected' : '' }}>{{ $job->name_status }}</option>
+  @endforeach 
+     
 </select>
 </div>
 <div class="input-group mb-3">

@@ -5,21 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\People;
 use App\Models\Task;
+use App\Models\Jobs;
 
 class TasksController extends Controller
 {
     public function index(){
-    $tasks = Task::all();
-    $people = People::all();
-    return view('home', compact('tasks'), compact('people'));
+    $tasks = new Task();
+    $people = new People();
+    return view('home', ['people'=> $people->all(), 'tasks'=> $tasks->all()]);
     }
     
-    public function create(){
-    
-        $tasks = Task::all();
-        $people = People::all();
-        return view('home', compact('tasks'), compact('people'));
-    }
+   public function create(){
+        $people = new People();
+        $tasks = new Task();
+        $jobs = new Jobs();
+        return view('home', ['people'=> $people->all(), 'tasks'=> $tasks->all(), 'jobs'=> $jobs->all() ]);
+   }
 
     public function store(){
         $tasks  = new Task();
@@ -38,9 +39,10 @@ class TasksController extends Controller
     }
 
     public function edit($id){
-        $tasks = Task::find($id);
-        $people = People::all();
-        return view('editt', compact('tasks'), compact('people'));
+        $tasks = new Task();
+        $people = new People();
+        $jobs = new Jobs();
+        return view('editt', ['tasks'=> $tasks->find($id), 'people'=> $people->all(), 'jobs'=> $jobs->all()]);
     }
     public function update($id){
 

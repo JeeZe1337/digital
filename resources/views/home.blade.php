@@ -24,13 +24,12 @@
                                 <tr id="sidd{{$task->id}}">
                                     <td>{{$task->id}}</td>  
                                     <td>{{$task->name_task}}</td> 
-                                    <td>{{$task->executor}}</td> 
-                                    <td>{{$task->status}}</td> 
+                                    <td>{{$task->people->name}}</td> 
+                                    <td>{{$task->jobs->name_status}}</td> 
                                     <td>
                                     <button onclick="deleteTask({{$task->id}})" type="button" class="btn btn-danger mb-3">Удалить</button>
                                     <button onclick="window.location.href = '/editt/{{$task->id}}';" type="button" class="btn btn-warning">Редактировать</button>
-                                    </td>  
-                                    
+                                    </td>    
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -51,20 +50,23 @@
                         </div>   
                         <select for="executor" name="executor" class="form-control">
                             @foreach ($people as $peoples)
-                            <option>{{ $peoples->name }}</option>
-                            @endforeach
-                    </select>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Статус</span>
-                        </div>   
+                            <option value="{{$peoples->id}}">{{ $peoples->name }}</option>
+                            @endforeach  
+                        </select>
+                    
+                </div>
+               
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Статус</span>
+                    </div>   
                     <select for="status" name="status" class="form-control">
-                        <option>Открыта</option>  
-                        <option>В работе</option>
-                        <option>Завершена</option>    
+                        @foreach ($jobs as $job)
+                        <option value="{{$job->id}}">{{ $job->name_status }}</option>
+                        @endforeach  
                     </select>
-                    </div>
+                
+            </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Описание</span>
@@ -91,7 +93,6 @@
                             @foreach ($people as $peoples)
                           
                             <tr id="sid{{$peoples->id}}">
-                               
                                  <td >{{$peoples->id}}</td>  
                                  <td>{{$peoples->name}}</td> 
                                  <td>{{$peoples->position}}</td> 
@@ -100,7 +101,6 @@
                                 <button onclick="window.location.href = '/editp/{{$peoples->id}}';" class="btn btn-warning">Редактировать</button>
                                 </td>
                             </tr>
-                        
                             @endforeach
                         </tbody>
                 </table>
@@ -155,7 +155,13 @@
                         },
                         success:function(response){
                             $('#sid'+id).remove();
+                            alert ('Запись удалена!')
+                        },
+                        error: function (jqXHR, exception) {
+                            if (jqXHR.status == 500) {
+                            alert ('Пользователь не может быть удалён, у него есть задача!')
                         }
+                    }
                     })
                 }
             }
@@ -174,7 +180,8 @@
                         },
                         success:function(response){
                             $('#sidd'+id).remove();
-                        }
+                            alert ('Запись удалена!')
+                        },
                     })
                 }
             }

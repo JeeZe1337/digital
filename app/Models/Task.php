@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-   
+      public function people()
+      {
+          return $this->belongsTo(People::class, 'executor', 'id');
+      }
+      public function jobs()
+      {
+          return $this->belongsTo(Jobs::class, 'status', 'id');
+      }
 }
